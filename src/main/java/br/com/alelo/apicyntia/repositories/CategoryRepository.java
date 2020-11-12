@@ -6,4 +6,5 @@ import br.com.alelo.apicyntia.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+
 }

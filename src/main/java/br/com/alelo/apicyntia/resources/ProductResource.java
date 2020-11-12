@@ -13,8 +13,8 @@ import br.com.alelo.apicyntia.entities.User;
 import br.com.alelo.apicyntia.services.UserService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/products")
+public class ProductResource {
 
 	@Autowired
 	private UserService service;
