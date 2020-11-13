@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import br.com.alelo.apicyntia.entities.Category;
 import br.com.alelo.apicyntia.entities.Order;
 import br.com.alelo.apicyntia.entities.OrderItem;
+import br.com.alelo.apicyntia.entities.Payment;
 import br.com.alelo.apicyntia.entities.Product;
 import br.com.alelo.apicyntia.entities.User;
 import br.com.alelo.apicyntia.entities.enums.OrderStatus;
@@ -32,10 +33,10 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Autowired
 	private OrderItemRepository orderItemRepository;
 
@@ -44,21 +45,23 @@ public class TestConfig implements CommandLineRunner {
 
 		Category cat1 = new Category(null, "Livros");
 		Category cat2 = new Category(null, "Ebooks");
-		
-		
-		Product p1 = new Product(null, "Saga Otori - A rede do céu é vasta - prelúdio by Lian Hearn", "Lorem ipsum dolor sit amet, consectetur.", 64.8, "");
-		Product p2 = new Product(null, "Saga Otori - A relva por travesseiro: 2 by Lean Hearn", "Nulla eu imperdiet purus. Maecenas ante.", 36.0, "");
-		Product p3 = new Product(null, "Turma da Mônica Geração 12 - Número Zero by Mauricio de Souza", "Nam eleifend maximus tortor, at mollis.", 6.0, "");
 
-		categoryRepository.saveAll(Arrays.asList(cat1,cat2));
+		Product p1 = new Product(null, "Saga Otori - A rede do céu é vasta - prelúdio by Lian Hearn",
+				"Lorem ipsum dolor sit amet, consectetur.", 64.8, "");
+		Product p2 = new Product(null, "Saga Otori - A relva por travesseiro: 2 by Lean Hearn",
+				"Nulla eu imperdiet purus. Maecenas ante.", 36.0, "");
+		Product p3 = new Product(null, "Turma da Mônica Geração 12 - Número Zero by Mauricio de Souza",
+				"Nam eleifend maximus tortor, at mollis.", 6.0, "");
+
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
-		
+
 		p1.getCategories().add(cat1);
 		p2.getCategories().add(cat2);
 		p3.getCategories().add(cat1);
-		
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));		
-		
+
+		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+
 		User u1 = new User(null, "Sirigueijo", "sirigueijo@siricascudo.com", "977777777", "123456");
 		User u2 = new User(null, "Patrick Estrela", "patrick@estrela.com", "988888888", "123456");
 		User u3 = new User(null, "Sandy Bochechas", "sandy@bochechas.com", "966666666", "123456");
@@ -74,8 +77,13 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
 		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
 		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
-		
+
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
+
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+
+		orderRepository.save(o1);
 
 	}
 }
