@@ -20,7 +20,7 @@ public enum OrderStatus {
 				return value;
 			}
 		}
-		
+
 		throw new IllegalArgumentException("Invalid OrderStatus code");
 	}
 }
