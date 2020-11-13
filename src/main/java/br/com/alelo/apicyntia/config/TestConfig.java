@@ -10,12 +10,14 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.alelo.apicyntia.entities.Category;
 import br.com.alelo.apicyntia.entities.Order;
+import br.com.alelo.apicyntia.entities.OrderItem;
 import br.com.alelo.apicyntia.entities.Product;
 import br.com.alelo.apicyntia.entities.User;
 import br.com.alelo.apicyntia.entities.enums.OrderStatus;
 import br.com.alelo.apicyntia.repositories.CategoryRepository;
-import br.com.alelo.apicyntia.repositories.ProductRepository;
+import br.com.alelo.apicyntia.repositories.OrderItemRepository;
 import br.com.alelo.apicyntia.repositories.OrderRepository;
+import br.com.alelo.apicyntia.repositories.ProductRepository;
 import br.com.alelo.apicyntia.repositories.UserRepository;
 
 @Configuration
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -65,6 +70,12 @@ public class TestConfig implements CommandLineRunner {
 
 		userRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
 
 	}
 }
